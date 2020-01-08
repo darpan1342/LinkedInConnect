@@ -1,6 +1,6 @@
 import urllib.request,urllib.error,urllib.parse
 import ssl
-import bs4
+import bs4 as BeautifulSoup
 
 ctx = ssl.create_default_context()
 ctx.check_hostname = False
@@ -10,3 +10,5 @@ shandle = urllib.request.urlopen('https://www.linkedin.com/login?fromSignIn=true
 
 for i in shandle:
     print(i.decode())
+soup = BeautifulSoup(shandle, 'html.parser')
+tag = soup('a')
