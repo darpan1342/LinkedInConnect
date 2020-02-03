@@ -1,12 +1,20 @@
 import time
-import credentials
+import platform
 from selenium import webdriver
 
-username = credentials.username()
-passwd = credentials.passwd()
-keywords = credentials.keywords()
-browser = webdriver.Chrome(
-    executable_path="C:\Program Files (x86)\Google\chrome\chromedriver.exe")
+platform = platform.system()
+
+username = "Enter Your Username"
+passwd = "Enter your password"
+keywords = "Enter your keywords"
+
+# windows
+if platform == "Windows":
+    browser = webdriver.Chrome(
+        executable_path="C:\Program Files (x86)\Google\chrome\chromedriver.exe")
+else:
+    # mac
+    browser = webdriver.Chrome(executable_path="chrome_driver/chromedriver")
 
 # loading linkedin sign in page
 web_url = "https://www.linkedin.com/login?fromSignIn=true&trk=guest_homepage-basic_nav-header-signin"
@@ -25,7 +33,8 @@ sign_in = browser.find_element_by_tag_name('Button')
 sign_in.click()
 
 # search_url
-search_url = "https://www.linkedin.com/search/results/people/?facetNetwork=%5B\"S\"%2C\"O\"%5D&keywords="+keywords+"&origin=SWITCH_SEARCH_VERTICAL"
+search_url = "https://www.linkedin.com/search/results/people/?facetNetwork=%5B\"S\"%2C\"O\"%5D&keywords=" + \
+    keywords+"&origin=SWITCH_SEARCH_VERTICAL"
 browser.get(search_url)
 
 # full screen
