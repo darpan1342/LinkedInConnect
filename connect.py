@@ -1,33 +1,53 @@
-from selenium import webdriver
 import time
+import credentials
+from selenium import webdriver
 
-browser = webdriver.Chrome(executable_path="C:\Program Files (x86)\Google\chrome\chromedriver.exe")
+username = credentials.username()
+passwd = credentials.passwd()
+keywords = credentials.keywords()
+browser = webdriver.Chrome(
+    executable_path="C:\Program Files (x86)\Google\chrome\chromedriver.exe")
 
-#loading linkedin sign in page 
+# loading linkedin sign in page
 web_url = "https://www.linkedin.com/login?fromSignIn=true&trk=guest_homepage-basic_nav-header-signin"
 browser.get(web_url)
 
-#passwd fill
+# passwd fill
 input = browser.find_element_by_id('password')
-input.send_keys('darpan123@sharma')
+input.send_keys(passwd)
 
-#usernamefill
+# usernamefill
 input = browser.find_element_by_id('username')
-input.send_keys('asharma6890@gmail.com')
+input.send_keys(username)
 
-#signin
+# signin
 sign_in = browser.find_element_by_tag_name('Button')
 sign_in.click()
 
-web_url = "https://www.linkedin.com/search/results/people/?keywords=python&origin=SWITCH_SEARCH_VERTICAL"
-browser.get(web_url)
+# search_url
+search_url = "https://www.linkedin.com/search/results/people/?facetNetwork=%5B\"S\"%2C\"O\"%5D&keywords="+keywords+"&origin=SWITCH_SEARCH_VERTICAL"
+browser.get(search_url)
 
-it = browser.find_elements_by_tag_name('code')
-j=0
+# full screen
+browser.fullscreen_window()
+
+exit
+time.sleep(10)
+
+# hiding msg window not needed for fullscreen
+k = browser.find_element_by_class_name("msg-overlay-bubble-header__button")
+k.click()
+
+# fecthing buttons
+it = browser.find_elements_by_tag_name("button")
+j = 0
 for i in it:
-    j = j+1
-print(j) 
-#sleep(5)
-#help(browser)
+    if(i.text == "Connect"):
+        j = j+1
+        i.click()
+        time.sleep(2)
+        k = browser.find_element_by_class_name("ml1")
+        k.click()
 
-#browser.close()
+browser.close()
+print(str(j)+" invites has been sent on your behalf.")
