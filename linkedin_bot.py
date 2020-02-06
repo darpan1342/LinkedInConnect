@@ -7,8 +7,8 @@ def setup():
 
     pltfrm = platform.system()
 
-    username = "asharma6890@gmail.com"
-    passwd = "darpan123@sharma"
+    username = ""
+    passwd = ""
 
     # windows
     if pltfrm == "Windows":
